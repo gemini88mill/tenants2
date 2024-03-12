@@ -10,7 +10,21 @@ import { Dashboard } from "./components/organisms/Dashboard";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    primary: {
+      main: "#9C3535",
+      
+    },
+    background: {
+      default: "#121212",
+      paper: "#15443f",
+
+    },
+    secondary: {
+      main: "#359c9c",
+    },
+    
   },
+
 });
 
 function App() {

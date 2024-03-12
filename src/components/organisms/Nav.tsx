@@ -1,31 +1,39 @@
+import { Settings } from "@mui/icons-material";
 import {
   Box,
   Drawer,
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 
-export const Nav = () => {
+type NavProps = {
+  bannerText: string;
+};
+
+export const Nav = ({bannerText}: NavProps) => {
   return (
     <Box sx={{ display: "flex" }}>
       <Drawer
         variant="permanent"
         anchor="left"
         sx={{
-          bgcolor: "background.default",
+          bgcolor: "background.primary",
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: "300px",
+            width: "250px",
             boxSizing: "border-box",
+            bgcolor: "background.primary",
           },
         }}
       >
         <List>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary={bannerText} />
+              <ListItemIcon><Settings /></ListItemIcon>
             </ListItemButton>
           </ListItem>
         </List>

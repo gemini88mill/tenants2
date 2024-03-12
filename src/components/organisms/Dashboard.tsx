@@ -20,7 +20,7 @@ export const Dashboard = () => {
   if(profile) {
     return (
       <div>
-        <Nav />
+        <Nav bannerText={`Welcome, ${profile.display_name}`} />
         <h1>Dashboard</h1>
         <p>Welcome, {profile.display_name}!</p>
       </div>
