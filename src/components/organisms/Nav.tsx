@@ -11,9 +11,11 @@ import {
 
 type NavProps = {
   bannerText: string;
+  navWidth?: string;
+  onSettingsClick?: () => void;
 };
 
-export const Nav = ({bannerText}: NavProps) => {
+export const Nav = ({bannerText, navWidth, onSettingsClick}: NavProps) => {
   return (
     <Box sx={{ display: "flex" }}>
       <Drawer
@@ -23,7 +25,7 @@ export const Nav = ({bannerText}: NavProps) => {
           bgcolor: "background.primary",
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: "250px",
+            width: navWidth,
             boxSizing: "border-box",
             bgcolor: "background.primary",
           },
@@ -31,7 +33,7 @@ export const Nav = ({bannerText}: NavProps) => {
       >
         <List>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={onSettingsClick}>
               <ListItemText primary={bannerText} />
               <ListItemIcon><Settings /></ListItemIcon>
             </ListItemButton>
