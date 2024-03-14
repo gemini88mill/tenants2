@@ -27,7 +27,7 @@ export const Dashboard = () => {
 
   if (profile) {
     return (
-      <div style={{ marginLeft: "250px" }}>
+      <div>
         <Nav
           bannerText={`Welcome, ${profile.display_name}`}
           navWidth={NAVWIDTH}
