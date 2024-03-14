@@ -1,36 +1,16 @@
-import { useEffect, useState } from "react";
-import { useSessionProvider } from "../contexts/SessionProvider";
-import { ProfileType } from "../../supabase/profileClient";
-import { Profile } from "./Profile";
-import { ProfileContextProvider } from "../contexts/ProfileProvider";
-import { Nav } from "./Nav";
 import { Box, Slide } from "@mui/material";
+import { useEffect, useState } from "react";
+import { ProfileType } from "../../supabase/profileClient";
+import { ProfileContextProvider } from "../contexts/ProfileProvider";
+import { useSessionProvider } from "../contexts/SessionProvider";
+import { Nav } from "./Nav";
+import { Profile } from "./Profile";
 import { TransitionGroup } from "react-transition-group";
+import { Settings } from "./Settings/Settings";
 
 const NAVWIDTH = "250px";
 
-type DashViews = "dashboard" | "profile" | "settings";
-
-const getView = (view: DashViews) => {
-  switch (view) {
-    case "dashboard":
-      return (
-        <Box sx={{ marginLeft: NAVWIDTH }}>
-          <h1>Dashboard</h1>
-          <p>Welcome, person!</p>
-        </Box>
-      );
-    case "profile":
-      return <Profile />;
-    case "settings":
-      return (
-        <Box sx={{ marginLeft: NAVWIDTH }}>
-          <h1>Settings</h1>
-          <p>Settings go here</p>
-        </Box>
-      );
-  }
-};
+export type DashViews = "dashboard" | "profile" | "settings";
 
 export const Dashboard = () => {
   const { session, getProfile } = useSessionProvider();
@@ -53,13 +33,10 @@ export const Dashboard = () => {
           navWidth={NAVWIDTH}
           onSettingsClick={() => setView("settings")}
         />
-          <Slide direction="right" in={view === "dashboard"} mountOnEnter unmountOnExit>
-            <h1>Dashboard</h1>
-          </Slide>
-          <Slide direction="right" in={view === "settings"} mountOnEnter unmountOnExit>
-            <h1>Settings</h1>
-          </Slide>
-        
+        <TransitionGroup>
+            <Main view={view} />
+            <Settings navWidth={250} view={view} />
+        </TransitionGroup>
       </div>
     );
   } else {
@@ -70,3 +47,14 @@ export const Dashboard = () => {
     );
   }
 };
+
+
+
+const Main = ({ view }: { view: DashViews }) => {
+  return view === "dashboard" ? (
+    <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+      <h1>Dashboard</h1>
+    </Slide>
+  ) : null;
+};
+
