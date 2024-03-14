@@ -1,11 +1,11 @@
-import { Box, Slide } from "@mui/material";
+import { Slide } from "@mui/material";
 import { useEffect, useState } from "react";
+import { TransitionGroup } from "react-transition-group";
 import { ProfileType } from "../../supabase/profileClient";
 import { ProfileContextProvider } from "../contexts/ProfileProvider";
 import { useSessionProvider } from "../contexts/SessionProvider";
 import { Nav } from "./Nav";
 import { Profile } from "./Profile";
-import { TransitionGroup } from "react-transition-group";
 import { Settings } from "./Settings/Settings";
 
 const NAVWIDTH = "250px";
