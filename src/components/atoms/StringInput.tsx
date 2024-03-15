@@ -8,6 +8,7 @@ type StringInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   pattern?: RegExp;
   helperText?: string;
+  password?: boolean;
 };
 
 /**
@@ -21,7 +22,8 @@ export const StringInput = ({
   onChange,
   width,
   pattern,
-  helperText = " "
+  helperText = " ",
+  password = false
 }: StringInputProps) => {
   const isInvalid = useValidity(value, pattern ?? /.+/);
 
@@ -35,6 +37,7 @@ export const StringInput = ({
         value={value}
         onChange={onChange}
         helperText={isInvalid ? helperText : " "}
+        type={password ? "password" : "text"}
       />
     </Grid>
   );
