@@ -27,7 +27,7 @@ export const Dashboard = () => {
 
   if (profile) {
     return (
-      <div>
+      <>
         <Nav
           bannerText={`Welcome, ${profile.display_name}`}
           navWidth={NAVWIDTH}
@@ -37,7 +37,7 @@ export const Dashboard = () => {
             <Main view={view} />
             <Settings navWidth={250} view={view} />
         </TransitionGroup>
-      </div>
+      </>
     );
   } else {
     return (
