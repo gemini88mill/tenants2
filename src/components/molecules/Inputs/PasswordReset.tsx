@@ -1,20 +1,21 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { StringInput } from "../../atoms/StringInput";
 import { useCallback, useEffect, useState } from "react";
+import { supabase } from "../../../supabase/supabase";
 
 const usePasswordValidator = (password: string, confirmPassword: string) => {
-  const [isInvalid, setIsInvalid] = useState(false);
+  const [invalidReason, setInvalidReason] = useState("");
 
   const checkValidity = useCallback(
     () => {
       if (
-        password === confirmPassword ||
-        (password === "" ||
-        confirmPassword === "")
+        password !== confirmPassword 
       ) {
-        setIsInvalid(false);
+        setInvalidReason("passwords do not match");
+      } else if (password.length > 0 && password.length < 8) {
+        setInvalidReason("password must be at least 8 characters long");
       } else {
-        setIsInvalid(true);
+        setInvalidReason("");
       }
     },
     [confirmPassword, password]
@@ -23,19 +24,23 @@ const usePasswordValidator = (password: string, confirmPassword: string) => {
   useEffect(() => {
     const timeoutid = setTimeout(() => {
       checkValidity();
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timeoutid);
   }, [password, confirmPassword, checkValidity]);
 
-  return isInvalid;
+  return {invalidReason};
 };
 
 export const PasswordReset = () => {
   const [passwordPair, setPasswordPair] = useState(["", ""]);
-  const isInvalid = usePasswordValidator(passwordPair[0], passwordPair[1]);
-  const onClickHandler = () => {
-    console.log("Password Reset");
+  const {invalidReason} = usePasswordValidator(passwordPair[0], passwordPair[1]);
+  const onClickHandler = async () => {
+    const {data, error} = await supabase.auth.updateUser({
+      password: passwordPair[0],
+    });
+
+    setPasswordPair(["", ""]);
   };
 
   return (
@@ -60,12 +65,13 @@ export const PasswordReset = () => {
         </Stack>
       </Grid>
       <Grid item xs={10}>
-        {isInvalid ? (
-          <p style={{ float: "right" }}>Passwords do not match</p>
+        {invalidReason.length > 0 ? (
+          <p style={{ float: "right" }}>{invalidReason}</p>
         ) : null}
       </Grid>
       <Grid item xs={2}>
         <Button
+          disabled={invalidReason.length > 0 || (passwordPair[0] === "" && passwordPair[1] === "")}
           variant="contained"
           color="success"
           sx={{ float: "right" }}
