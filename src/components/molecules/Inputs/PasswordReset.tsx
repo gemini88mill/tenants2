@@ -1,6 +1,6 @@
-import { Button, Grid, Stack } from "@mui/material";
+import { AlertColor, Button, Grid, Stack } from "@mui/material";
 import { StringInput } from "../../atoms/StringInput";
-import { useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { supabase } from "../../../supabase/supabase";
 
 const usePasswordValidator = (password: string, confirmPassword: string) => {
@@ -32,7 +32,11 @@ const usePasswordValidator = (password: string, confirmPassword: string) => {
   return {invalidReason};
 };
 
-export const PasswordReset = () => {
+type PasswordResetProps = {
+  setNotification: Dispatch<SetStateAction<{type: AlertColor, message: string}>>;
+};
+
+export const PasswordReset = ({setNotification}: PasswordResetProps) => {
   const [passwordPair, setPasswordPair] = useState(["", ""]);
   const {invalidReason} = usePasswordValidator(passwordPair[0], passwordPair[1]);
   const onClickHandler = async () => {
@@ -41,6 +45,7 @@ export const PasswordReset = () => {
     });
 
     setPasswordPair(["", ""]);
+    setNotification(error ? {type: "error", message: error.message} : {type: "success", message: "Password updated"});
   };
 
   return (
