@@ -1,7 +1,8 @@
-import { AlertColor, Button, Grid, Stack } from "@mui/material";
-import { StringInput } from "../../atoms/StringInput";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { Button, Grid, Stack } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../../../supabase/supabase";
+import { StringInput } from "../../atoms/StringInput";
+import { useToast } from "../../contexts/ToastProvider";
 
 const usePasswordValidator = (password: string, confirmPassword: string) => {
   const [invalidReason, setInvalidReason] = useState("");
@@ -32,20 +33,17 @@ const usePasswordValidator = (password: string, confirmPassword: string) => {
   return {invalidReason};
 };
 
-type PasswordResetProps = {
-  setNotification: Dispatch<SetStateAction<{type: AlertColor, message: string}>>;
-};
-
-export const PasswordReset = ({setNotification}: PasswordResetProps) => {
+export const PasswordReset = () => {
   const [passwordPair, setPasswordPair] = useState(["", ""]);
   const {invalidReason} = usePasswordValidator(passwordPair[0], passwordPair[1]);
+  const {createToast} = useToast();
   const onClickHandler = async () => {
     const {data, error} = await supabase.auth.updateUser({
       password: passwordPair[0],
     });
 
     setPasswordPair(["", ""]);
-    setNotification(error ? {type: "error", message: error.message} : {type: "success", message: "Password updated"});
+    createToast({ type: error ? "error" : "success", message: error ? error.message : "Password updated" });
   };
 
   return (
