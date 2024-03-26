@@ -31,7 +31,7 @@ export const Dashboard = () => {
         <Nav
           bannerText={`Welcome, ${profile.display_name}`}
           navWidth={NAVWIDTH}
-          onSettingsClick={() => setView("settings")}
+          onSettingsClick={() => setView(() => (view === "settings" ? "dashboard" : "settings"))}
         />
         <TransitionGroup>
             <Main view={view} />
