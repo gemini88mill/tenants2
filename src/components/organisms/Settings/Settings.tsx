@@ -1,6 +1,7 @@
-import { Box, Grid, Slide, Stack } from "@mui/material";
+import { Box, Slide, Stack } from "@mui/material";
 import { PasswordReset } from "../../molecules/Inputs/PasswordReset";
 import { DashViews } from "../Dashboard";
+import { EmailReset } from "./EmailReset";
 import { PhoneReset } from "./PhoneReset";
 
 type SettingsProps = {
@@ -17,9 +18,7 @@ export const Settings = ({ view }: SettingsProps) => {
         <Stack spacing={2}>
           <h1>Settings</h1>
           <PasswordReset />
-          <Grid container>
-            <h3>Change Email</h3>
-          </Grid>
+          <EmailReset />
           <PhoneReset />
         </Stack>
       </Box>
