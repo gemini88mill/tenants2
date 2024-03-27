@@ -38,7 +38,7 @@ export const PasswordReset = () => {
   const {invalidReason} = usePasswordValidator(passwordPair[0], passwordPair[1]);
   const {createToast} = useToast();
   const onClickHandler = async () => {
-    const {data, error} = await supabase.auth.updateUser({
+    const {error} = await supabase.auth.updateUser({
       password: passwordPair[0],
     });
 

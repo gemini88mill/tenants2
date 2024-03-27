@@ -1,6 +1,7 @@
 import { Box, Grid, Slide, Stack } from "@mui/material";
 import { PasswordReset } from "../../molecules/Inputs/PasswordReset";
 import { DashViews } from "../Dashboard";
+import { PhoneReset } from "./PhoneReset";
 
 type SettingsProps = {
   navWidth?: number;
@@ -19,9 +20,7 @@ export const Settings = ({ view }: SettingsProps) => {
           <Grid container>
             <h3>Change Email</h3>
           </Grid>
-          <Grid container>
-            <h3>Change Phone</h3>
-          </Grid>
+          <PhoneReset />
         </Stack>
       </Box>
     </Slide>
