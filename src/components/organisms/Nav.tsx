@@ -1,6 +1,7 @@
 import { Settings } from "@mui/icons-material";
 import {
   Box,
+  Divider,
   Drawer,
   List,
   ListItem,
@@ -36,6 +37,22 @@ export const Nav = ({bannerText, navWidth, onSettingsClick}: NavProps) => {
             <ListItemButton onClick={onSettingsClick}>
               <ListItemText primary={bannerText} />
               <ListItemIcon><Settings /></ListItemIcon>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemButton>
+              <ListItemText primary="Tenants" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemText primary="Owners" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemText primary="Properties" />
             </ListItemButton>
           </ListItem>
         </List>
