@@ -10,7 +10,7 @@ import { Settings } from "./Settings/Settings";
 
 const NAVWIDTH = "250px";
 
-export type DashViews = "dashboard" | "profile" | "settings";
+export type DashViews = "dashboard" | "profile" | "settings" | "tenants" | "owners" | "properties";
 
 export const Dashboard = () => {
   const { session, getProfile } = useSessionProvider();
@@ -31,11 +31,12 @@ export const Dashboard = () => {
         <Nav
           bannerText={`Welcome, ${profile.display_name}`}
           navWidth={NAVWIDTH}
-          onSettingsClick={() => setView(() => (view === "settings" ? "dashboard" : "settings"))}
+          onNavItemClick={setView}
         />
         <TransitionGroup>
             <Main view={view} />
             <Settings navWidth={250} view={view} />
+            <Tenants view={view} />
         </TransitionGroup>
       </>
     );
@@ -48,12 +49,22 @@ export const Dashboard = () => {
   }
 };
 
+type MainProps = {
+  view: DashViews;
+};
 
-
-const Main = ({ view }: { view: DashViews }) => {
+const Main = ({ view }: MainProps) => {
   return view === "dashboard" ? (
     <Slide direction="right" in={true} mountOnEnter unmountOnExit>
       <h1>Dashboard</h1>
+    </Slide>
+  ) : null;
+};
+
+const Tenants = ({ view }: MainProps) => {
+  return view === "tenants" ? (
+    <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+      <h1>Tenants</h1>
     </Slide>
   ) : null;
 };

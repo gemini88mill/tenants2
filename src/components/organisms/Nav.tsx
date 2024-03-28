@@ -9,14 +9,15 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { DashViews } from "./Dashboard";
 
 type NavProps = {
   bannerText: string;
   navWidth?: string;
-  onSettingsClick?: () => void;
+  onNavItemClick: React.Dispatch<React.SetStateAction<DashViews>>;
 };
 
-export const Nav = ({bannerText, navWidth, onSettingsClick}: NavProps) => {
+export const Nav = ({bannerText, navWidth, onNavItemClick}: NavProps) => {
   return (
     <Box sx={{ display: "flex" }}>
       <Drawer
@@ -34,14 +35,14 @@ export const Nav = ({bannerText, navWidth, onSettingsClick}: NavProps) => {
       >
         <List>
           <ListItem>
-            <ListItemButton onClick={onSettingsClick}>
+            <ListItemButton onClick={() => onNavItemClick((prev) => prev === "dashboard" ? "settings" : "dashboard")}>
               <ListItemText primary={bannerText} />
               <ListItemIcon><Settings /></ListItemIcon>
             </ListItemButton>
           </ListItem>
           <Divider />
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={() => onNavItemClick("tenants")}>
               <ListItemText primary="Tenants" />
             </ListItemButton>
           </ListItem>
